@@ -16,5 +16,10 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Ioasys.IMDb.Data\Ioasys.IMDb.Data.csproj" />
+    <ProjectReference Include="..\Ioasys.IMDb.Domain\Ioasys.IMDb.Domain.csproj" />
+  </ItemGroup>
+
 
 </Project>

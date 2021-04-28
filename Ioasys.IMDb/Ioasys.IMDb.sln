@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31105.61
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ioasys.IMDb.Domain", "src\Ioasys.IMDb.Domain\Ioasys.IMDb.Domain.csproj", "{E97049BF-8C53-45E7-B92C-A0073D2561AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ioasys.IMDb.Domain", "src\Ioasys.IMDb.Domain\Ioasys.IMDb.Domain.csproj", "{E97049BF-8C53-45E7-B92C-A0073D2561AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ioasys.IMDb.Data", "src\Ioasys.IMDb.Data\Ioasys.IMDb.Data.csproj", "{4A5C7401-6739-4DA4-A2BB-AFB2B81106B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ioasys.IMDb.Data", "src\Ioasys.IMDb.Data\Ioasys.IMDb.Data.csproj", "{4A5C7401-6739-4DA4-A2BB-AFB2B81106B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ioasys.IMDb.Api", "Ioasys.IMDb.Api\Ioasys.IMDb.Api.csproj", "{4A737996-A98D-4E2E-B7FA-E35EFCBA00F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ioasys.IMDb.Api", "src\Ioasys.IMDb.Api\Ioasys.IMDb.Api.csproj", "{0B954041-9032-4F11-B517-D763ED2EED37}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{4A5C7401-6739-4DA4-A2BB-AFB2B81106B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A5C7401-6739-4DA4-A2BB-AFB2B81106B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A5C7401-6739-4DA4-A2BB-AFB2B81106B3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4A737996-A98D-4E2E-B7FA-E35EFCBA00F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4A737996-A98D-4E2E-B7FA-E35EFCBA00F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4A737996-A98D-4E2E-B7FA-E35EFCBA00F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4A737996-A98D-4E2E-B7FA-E35EFCBA00F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B954041-9032-4F11-B517-D763ED2EED37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B954041-9032-4F11-B517-D763ED2EED37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B954041-9032-4F11-B517-D763ED2EED37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B954041-9032-4F11-B517-D763ED2EED37}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

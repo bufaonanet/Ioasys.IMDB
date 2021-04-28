@@ -2,5 +2,9 @@
 {
     public class Administrador : Pessoa
     {
+        public Administrador()
+        {
+            NivelAcesso = TiposAcesso.admin;
+        }
     }
 }

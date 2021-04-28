@@ -1,6 +1,6 @@
 ﻿namespace Ioasys.IMDb.Domain.Models
 {
-    public enum NivelAcesso
+    public enum TiposAcesso
     {
         admin = 1,
         user = 2

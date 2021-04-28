@@ -6,6 +6,6 @@
         public string Login { get; set; }
         public string Senha { get; set; }
         public bool Ativo { get; set; }
-        public NivelAcesso NivelAcesso { get; set; }
+        public TiposAcesso NivelAcesso { get; set; }
     }
 }
