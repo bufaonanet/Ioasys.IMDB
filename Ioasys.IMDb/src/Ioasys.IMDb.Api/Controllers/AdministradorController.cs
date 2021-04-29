@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 namespace Ioasys.IMDb.Api.Controllers
 {
 
-    [Route("api/v1/administradores")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/administradores")]  
     public class AdministradorController : MainController
     {
         private readonly IAdministradorRepository _repository;
