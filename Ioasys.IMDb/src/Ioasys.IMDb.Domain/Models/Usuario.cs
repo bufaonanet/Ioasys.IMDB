@@ -4,6 +4,7 @@
     {
         public Usuario()
         {
+            Ativo = true;
             NivelAcesso = TiposAcesso.user;
         }
     }

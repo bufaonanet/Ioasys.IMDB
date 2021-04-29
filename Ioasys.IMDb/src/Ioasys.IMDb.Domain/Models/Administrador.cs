@@ -4,6 +4,7 @@
     {
         public Administrador()
         {
+            Ativo = true;
             NivelAcesso = TiposAcesso.admin;
         }
     }

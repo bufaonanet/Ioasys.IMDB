@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Ioasys.IMDb.Domain.Models;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Ioasys.IMDb.Data
 {
@@ -16,6 +18,6 @@ namespace Ioasys.IMDb.Data
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(IMDbContext).Assembly);
 
             base.OnModelCreating(modelBuilder);
-        }
+        }       
     }
 }
