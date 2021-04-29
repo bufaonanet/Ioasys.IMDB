@@ -12,9 +12,9 @@ namespace Ioasys.IMDb.Data.Repository
     {
         public UsuarioRepository(IMDbContext db) : base(db) { }
 
-        public async Task DesativarUsuario(Usuario usuario)
+        public async Task AlterarEstadoAtivo(Usuario usuario, bool ativo)
         {
-            usuario.Ativo = false;
+            usuario.Ativo = ativo;
 
             _db.Usuarios.Update(usuario);
             await SaveChanges();
@@ -23,7 +23,7 @@ namespace Ioasys.IMDb.Data.Repository
         public async Task<Usuario> ObterUsuarioPor(Guid id)
         {
             return await _db.Usuarios
-                .AsNoTracking()
+                .AsNoTracking()              
                 .FirstOrDefaultAsync(u => u.Id == id);
         }
 

@@ -1,5 +1,3 @@
-using Ioasys.IMDb.Api.Configurations;
-using Ioasys.IMDb.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Ioasys.IMDb.Api.Configurations;
+using Ioasys.IMDb.Data;
 
 namespace Ioasys.IMDb.Api
 {
@@ -73,8 +73,7 @@ namespace Ioasys.IMDb.Api
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint($"/swagger/v1/swagger.json", "Minha API V1");
-
+                c.SwaggerEndpoint($"/swagger/v1/swagger.json", "V1");
             });
         }
     }
