@@ -18,6 +18,12 @@ namespace Ioasys.IMDb.Api.ViewModels
 
         [Required(ErrorMessage = "O campo {0} é obrigatório!")]
         [StringLength(100, ErrorMessage = "O campo {0} precisa ter de {2} a {1} caracteres!", MinimumLength = 6)]
-        public string Senha { get; set; }      
+        public string Senha { get; set; }
+
+        public bool Ativo { get; set; }
+
+        public string Token { get; set; }  
+        
+
     }
 }

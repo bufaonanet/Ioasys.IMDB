@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Ioasys.IMDb.Domain.Interfaces;
 using Ioasys.IMDb.Domain.Models;
@@ -21,8 +23,16 @@ namespace Ioasys.IMDb.Data.Repository
         public async Task<Administrador> ObterAdministradorPor(Guid id)
         {
             return await _db.Administradores
-                .AsNoTracking()
+                .AsNoTracking()                
                 .FirstOrDefaultAsync(a => a.Id == id);
+        }
+
+        public async Task<List<Administrador>> ObterTodosAdministradores(Guid id)
+        {
+            return await _db.Administradores
+                .AsNoTracking()
+                .OrderBy(a => a.Nome)
+                .ToListAsync();
         }
     }
 }

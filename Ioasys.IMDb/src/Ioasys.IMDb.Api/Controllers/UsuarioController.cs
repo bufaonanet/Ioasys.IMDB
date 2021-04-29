@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 
 namespace Ioasys.IMDb.Api.Controllers
 {
-
     [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/administradores")]  
-    public class AdministradorController : MainController
+    [Route("api/v{version:apiVersion}/usuarios")]
+    public class UsuarioController : MainController
     {
-        private readonly IAdministradorRepository _repository;
+        private readonly IUsuarioRepository _repository;
         private readonly IMapper _mapper;
         private readonly TokenService _tokenService;
 
-        public AdministradorController(
-            IAdministradorRepository repository,
-            IMapper mapper, TokenService tokenService)
+        public UsuarioController(
+            IUsuarioRepository repository, 
+            IMapper mapper, 
+            TokenService tokenService)
         {
             _repository = repository;
             _mapper = mapper;
@@ -31,11 +31,11 @@ namespace Ioasys.IMDb.Api.Controllers
         [HttpGet("login")]
         public IActionResult Login(UsuarioViewModel usuarioViewModel)
         {
-            var administrador = _mapper.Map<Administrador>(usuarioViewModel);
+            var usuario = _mapper.Map<Usuario>(usuarioViewModel);
 
-            if (administrador == null) return NotFound();
+            if (usuario == null) return NotFound();
 
-            var token = _tokenService.GerarToken(administrador);
+            var token = _tokenService.GerarToken(usuario);
 
             usuarioViewModel.Token = token;
 
@@ -46,26 +46,26 @@ namespace Ioasys.IMDb.Api.Controllers
         [HttpGet]
         public async Task<IEnumerable<UsuarioViewModel>> ObterTodos()
         {
-            var administradores = await ObterTodosAdministradores();
-            return administradores;
+            var usuarios = await ObterTodosUsuarios();
+            return usuarios;
         }
 
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<UsuarioViewModel>> ObterPorId(Guid id)
         {
-            var administradores = await ObterAdministradorPorId(id);
+            var usuario = await ObterUsuarioPorId(id);
 
-            if (administradores == null) return NotFound();
+            if (usuario == null) return NotFound();
 
-            return CustomResponse(administradores);           
+            return CustomResponse(usuario);
         }
 
         [HttpPost()]
         public async Task<ActionResult<UsuarioViewModel>> Adicionar(UsuarioViewModel usuarioViewModel)
         {
-            if (!ModelState.IsValid) return CustomResponse(ModelState);         
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            await _repository.Adicionar(_mapper.Map<Administrador>(usuarioViewModel));
+            await _repository.Adicionar(_mapper.Map<Usuario>(usuarioViewModel));
 
             return CustomResponse(usuarioViewModel);
         }
@@ -77,7 +77,7 @@ namespace Ioasys.IMDb.Api.Controllers
 
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            await _repository.Atualizar(_mapper.Map<Administrador>(usuarioViewModel));
+            await _repository.Atualizar(_mapper.Map<Usuario>(usuarioViewModel));
 
             return CustomResponse(usuarioViewModel);
         }
@@ -85,7 +85,7 @@ namespace Ioasys.IMDb.Api.Controllers
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult<UsuarioViewModel>> Excluir(Guid id)
         {
-            var usuarioViewModel = await ObterAdministradorPorId(id);
+            var usuarioViewModel = await ObterUsuarioPorId(id);
 
             if (usuarioViewModel == null) return NotFound();
 
@@ -94,14 +94,16 @@ namespace Ioasys.IMDb.Api.Controllers
             return CustomResponse(usuarioViewModel);
         }
 
-        private async Task<IEnumerable<UsuarioViewModel>> ObterTodosAdministradores()
+        private async Task<IEnumerable<UsuarioViewModel>> ObterTodosUsuarios()
         {
-            return _mapper.Map<IEnumerable<UsuarioViewModel>>(await _repository.ObterTodos());
+            return _mapper.Map<IEnumerable<UsuarioViewModel>>(await _repository.ObterTodosUsuariosAtivos());
         }
 
-        private async Task<UsuarioViewModel> ObterAdministradorPorId(Guid id)
+        private async Task<UsuarioViewModel> ObterUsuarioPorId(Guid id)
         {
-            return _mapper.Map<UsuarioViewModel>(await _repository.ObterAdministradorPor(id));
+            return _mapper.Map<UsuarioViewModel>(await _repository.ObterUsuarioPor(id));
         }
+
+
     }
 }

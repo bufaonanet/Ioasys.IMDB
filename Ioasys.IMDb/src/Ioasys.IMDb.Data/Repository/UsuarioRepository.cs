@@ -1,6 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Ioasys.IMDb.Domain.Interfaces;
 using Ioasys.IMDb.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ioasys.IMDb.Data.Repository
 {
@@ -14,6 +18,22 @@ namespace Ioasys.IMDb.Data.Repository
 
             _db.Usuarios.Update(usuario);
             await SaveChanges();
+        }
+
+        public async Task<Usuario> ObterUsuarioPor(Guid id)
+        {
+            return await _db.Usuarios
+                .AsNoTracking()
+                .FirstOrDefaultAsync(u => u.Id == id);
+        }
+
+        public async Task<List<Usuario>> ObterTodosUsuariosAtivos()
+        {
+            return await _db.Usuarios
+                .AsNoTracking()
+                .Where(u => u.Ativo == true)
+                .OrderBy(u => u.Nome)
+                .ToListAsync();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Ioasys.IMDb.Data;
+﻿using Ioasys.IMDb.Api.Services;
+using Ioasys.IMDb.Data;
 using Ioasys.IMDb.Data.Repository;
 using Ioasys.IMDb.Domain.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +13,8 @@ namespace Ioasys.IMDb.Api.Configurations
             services.AddScoped<IMDbContext>();
             services.AddScoped<IAdministradorRepository, AdministradorRepository>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();                     
+
+            services.AddTransient<TokenService>();
 
             return services;
         }
