@@ -2,6 +2,7 @@
 {
     public class Usuario : Pessoa
     {
+        public Voto Voto { get; set; }
         public Usuario()
         {
             Ativo = true;

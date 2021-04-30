@@ -20,10 +20,17 @@ namespace Ioasys.IMDb.Data.Repository
             await SaveChanges();
         }
 
+        public async Task<Administrador> ObterAdministradorLogin(string login, string senha)
+        {
+            return await _db.Administradores
+                .AsNoTracking()
+                .FirstOrDefaultAsync(a => a.Login == login && a.Senha == senha);
+        }
+
         public async Task<Administrador> ObterAdministradorPor(Guid id)
         {
             return await _db.Administradores
-                .AsNoTracking()                
+                .AsNoTracking()
                 .FirstOrDefaultAsync(a => a.Id == id);
         }
 

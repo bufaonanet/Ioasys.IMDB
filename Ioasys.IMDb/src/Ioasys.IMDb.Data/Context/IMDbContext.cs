@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Ioasys.IMDb.Domain.Models;
-using System.Threading.Tasks;
-using System.Threading;
 
 namespace Ioasys.IMDb.Data
 {
@@ -9,6 +7,8 @@ namespace Ioasys.IMDb.Data
     {
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Administrador> Administradores { get; set; }
+        public DbSet<Filme> Filmes { get; set; }
+        public DbSet<Voto> Votos { get; set; }
         
         public IMDbContext(DbContextOptions<IMDbContext> options) : base(options) { }
 

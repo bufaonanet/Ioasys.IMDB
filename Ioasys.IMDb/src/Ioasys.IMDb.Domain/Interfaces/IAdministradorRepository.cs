@@ -10,5 +10,6 @@ namespace Ioasys.IMDb.Domain.Interfaces
         Task<Administrador> ObterAdministradorPor(Guid id);
         Task<List<Administrador>> ObterTodosAdministradores(Guid id);
         Task DesativarAdministrador(Administrador administrador);
+        Task<Administrador> ObterAdministradorLogin(string login, string senha);
     }
 }

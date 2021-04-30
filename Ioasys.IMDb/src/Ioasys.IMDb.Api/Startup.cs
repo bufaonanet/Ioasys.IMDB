@@ -27,7 +27,12 @@ namespace Ioasys.IMDb.Api
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString"));
             });
 
+
+            services.AddIdentityConfiguration(Configuration);
+
             services.AddAutoMapper(typeof(Startup));
+
+            services.AddCors();
 
             services.AddControllers();
 
@@ -63,6 +68,12 @@ namespace Ioasys.IMDb.Api
 
             app.UseRouting();
 
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

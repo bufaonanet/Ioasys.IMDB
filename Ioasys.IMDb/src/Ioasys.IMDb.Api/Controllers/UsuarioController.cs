@@ -16,32 +16,15 @@ namespace Ioasys.IMDb.Api.Controllers
     {
         private readonly IUsuarioRepository _repository;
         private readonly IMapper _mapper;
-        private readonly TokenService _tokenService;
 
         public UsuarioController(
             IUsuarioRepository repository, 
-            IMapper mapper, 
-            TokenService tokenService)
+            IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
-            _tokenService = tokenService;
         }
-
-        [HttpGet("login")]
-        public IActionResult Login(UsuarioViewModel usuarioViewModel)
-        {
-            var usuario = _mapper.Map<Usuario>(usuarioViewModel);
-
-            if (usuario == null) return NotFound();
-
-            var token = _tokenService.GerarToken(usuario);
-
-            usuarioViewModel.Token = token;
-
-            return CustomResponse(usuarioViewModel);
-
-        }
+               
 
         [HttpGet]
         public async Task<IEnumerable<UsuarioViewModel>> ObterTodos()

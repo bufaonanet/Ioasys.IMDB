@@ -3,6 +3,7 @@ using Ioasys.IMDb.Api.Services;
 using Ioasys.IMDb.Api.ViewModels;
 using Ioasys.IMDb.Domain.Interfaces;
 using Ioasys.IMDb.Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,6 @@ using System.Threading.Tasks;
 
 namespace Ioasys.IMDb.Api.Controllers
 {
-
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/administradores")]
     public class AdministradorController : MainController
@@ -31,18 +31,18 @@ namespace Ioasys.IMDb.Api.Controllers
             _usuarioRepository = usuarioRepository;
         }
 
-        [HttpGet("login")]
-        public IActionResult Login(UsuarioViewModel usuarioViewModel)
+        
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(LoginUserViewModel ViewModel)
         {
-            var administrador = _mapper.Map<Administrador>(usuarioViewModel);
+            var administrador = await _repository
+                .ObterAdministradorLogin(ViewModel.Login, ViewModel.Senha);                        
 
             if (administrador == null) return NotFound();
 
-            var token = _tokenService.GerarToken(administrador);
+            var tokenGerado = _tokenService.GerarToken(administrador);
 
-            usuarioViewModel.Token = token;
-
-            return CustomResponse(usuarioViewModel);
+            return CustomResponse(tokenGerado);
 
         }
 
@@ -84,7 +84,7 @@ namespace Ioasys.IMDb.Api.Controllers
             return usuarios;
         }
 
-        [HttpGet]
+        [HttpGet]       
         public async Task<IEnumerable<UsuarioViewModel>> ObterTodos()
         {
             var administradores = await ObterTodosAdministradores();
@@ -101,6 +101,7 @@ namespace Ioasys.IMDb.Api.Controllers
             return CustomResponse(administradores);
         }
 
+        [AllowAnonymous]
         [HttpPost()]
         public async Task<ActionResult<UsuarioViewModel>> Adicionar(UsuarioViewModel usuarioViewModel)
         {
