@@ -10,6 +10,7 @@ namespace Ioasys.IMDb.Api.Configurations
         {
             CreateMap<Administrador, UsuarioViewModel>().ReverseMap();
             CreateMap<Usuario, UsuarioViewModel>().ReverseMap();
+            CreateMap<Filme, FilmeViewModel>().ReverseMap();
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Ioasys.IMDb.Data.Repository
         public async Task<Usuario> ObterUsuarioPor(Guid id)
         {
             return await _db.Usuarios
-                .AsNoTracking()              
+                .AsNoTracking()
                 .FirstOrDefaultAsync(u => u.Id == id);
         }
 

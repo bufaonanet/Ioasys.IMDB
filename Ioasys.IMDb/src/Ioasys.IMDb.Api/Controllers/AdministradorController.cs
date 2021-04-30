@@ -100,8 +100,7 @@ namespace Ioasys.IMDb.Api.Controllers
 
             return CustomResponse(administradores);
         }
-
-        [AllowAnonymous]
+               
         [HttpPost()]
         public async Task<ActionResult<UsuarioViewModel>> Adicionar(UsuarioViewModel usuarioViewModel)
         {

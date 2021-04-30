@@ -1,7 +1,7 @@
-﻿using Ioasys.IMDb.Domain.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Ioasys.IMDb.Domain.Models;
 
 namespace Ioasys.IMDb.Domain.Interfaces
 {
