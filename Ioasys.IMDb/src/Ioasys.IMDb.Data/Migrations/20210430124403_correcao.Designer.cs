@@ -4,14 +4,16 @@ using Ioasys.IMDb.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Ioasys.IMDb.Data.Migrations
 {
     [DbContext(typeof(IMDbContext))]
-    partial class IMDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210430124403_correcao")]
+    partial class correcao
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -18,7 +18,7 @@ namespace Ioasys.IMDb.Data.Context.Mappings
                  .IsRequired()
                  .HasColumnType("varchar(200)");
 
-            builder.Property(f => f.Direto)
+            builder.Property(f => f.Diretor)
                 .IsRequired()
                 .HasColumnType("varchar(200)");
 

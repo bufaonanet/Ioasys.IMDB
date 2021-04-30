@@ -19,8 +19,9 @@ namespace Ioasys.IMDb.Api.ViewModels
 
         [Required(ErrorMessage = "O campo {0} é obrigatório!")]
         [StringLength(200, ErrorMessage = "O campo {0} precisa ter de {2} a {1} caracteres!", MinimumLength = 2)]
-        public string Direto { get; set; }
+        public string Diretor { get; set; }
 
-        public IEnumerable<VotoViewModel> Votos { get; set; }
+        //TODO: Criar parte de voto
+        //public IEnumerable<VotoViewModel> Votos { get; set; }
     }
 }

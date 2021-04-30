@@ -6,7 +6,7 @@ namespace Ioasys.IMDb.Domain.Models
     {
         public string Nome { get; set; }
         public string Genero { get; set; }
-        public string Direto { get; set; }
+        public string Diretor { get; set; }
 
         public IEnumerable<Voto> Votos { get; set; }
     }
