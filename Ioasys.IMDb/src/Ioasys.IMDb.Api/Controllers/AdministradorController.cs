@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Ioasys.IMDb.Api.Controllers
 {
+    [Authorize(Roles ="admin")]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/administradores")]
     public class AdministradorController : MainController
@@ -22,28 +23,35 @@ namespace Ioasys.IMDb.Api.Controllers
 
         public AdministradorController(
             IAdministradorRepository repository,
-            IMapper mapper, TokenService tokenService,
-            IUsuarioRepository usuarioRepository)
+            IMapper mapper,
+            IUsuarioRepository usuarioRepository, 
+            TokenService tokenService)
         {
             _repository = repository;
             _mapper = mapper;
-            _tokenService = tokenService;
             _usuarioRepository = usuarioRepository;
+            _tokenService = tokenService;
         }
 
-        
+        [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginUserViewModel ViewModel)
+        public async Task<ActionResult<dynamic>> Login(LoginUserViewModel loginViewModel)
         {
             var administrador = await _repository
-                .ObterAdministradorLogin(ViewModel.Login, ViewModel.Senha);                        
+                .ObterAdministradorLogin(loginViewModel.Login, loginViewModel.Senha);
 
-            if (administrador == null) return NotFound();
+            if (administrador == null) 
+                return NotFound(new { message = "Login ou senha inválida" });
 
             var tokenGerado = _tokenService.GerarToken(administrador);
 
-            return CustomResponse(tokenGerado);
+            loginViewModel.Senha = string.Empty;
 
+            return new
+            {             
+                user = loginViewModel,
+                token = tokenGerado
+            };
         }
 
         [HttpPut("desativar-usuario/{id:guid}")]
@@ -84,7 +92,9 @@ namespace Ioasys.IMDb.Api.Controllers
             return usuarios;
         }
 
-        [HttpGet]       
+
+        [HttpGet]
+        [Authorize]
         public async Task<IEnumerable<UsuarioViewModel>> ObterTodos()
         {
             var administradores = await ObterTodosAdministradores();
@@ -100,7 +110,7 @@ namespace Ioasys.IMDb.Api.Controllers
 
             return CustomResponse(administradores);
         }
-               
+
         [HttpPost()]
         public async Task<ActionResult<UsuarioViewModel>> Adicionar(UsuarioViewModel usuarioViewModel)
         {

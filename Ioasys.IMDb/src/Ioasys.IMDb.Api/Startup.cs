@@ -32,8 +32,6 @@ namespace Ioasys.IMDb.Api
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddCors();
-
             services.AddControllers();
 
             services.AddApiVersioning(options =>
@@ -49,12 +47,13 @@ namespace Ioasys.IMDb.Api
                 options.SubstituteApiVersionInUrl = true;
             });
 
+
+            services.ResolveDependecies();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "IMDb API", Version = "v1" });
             });
-
-            services.ResolveDependecies();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -62,16 +61,13 @@ namespace Ioasys.IMDb.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint($"/swagger/v1/swagger.json", "IMDb V1"));
             }
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
-            app.UseCors(x => x
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader());
 
             app.UseAuthentication();
             app.UseAuthorization();
@@ -79,13 +75,7 @@ namespace Ioasys.IMDb.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-            });
-
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint($"/swagger/v1/swagger.json", "V1");
-            });
+            });           
         }
     }
 }

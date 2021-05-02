@@ -35,5 +35,12 @@ namespace Ioasys.IMDb.Data.Repository
                 .OrderBy(u => u.Nome)
                 .ToListAsync();
         }
+
+        public async Task<Usuario> ObterUsuarioLogin(string login, string senha)
+        {
+            return await _db.Usuarios
+                .AsNoTracking()
+                .FirstOrDefaultAsync(a => a.Login == login && a.Senha == senha);
+        }
     }
 }

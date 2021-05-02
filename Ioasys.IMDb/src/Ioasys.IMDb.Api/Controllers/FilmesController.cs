@@ -1,14 +1,16 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
 using Ioasys.IMDb.Api.ViewModels;
 using Ioasys.IMDb.Domain.Interfaces;
 using Ioasys.IMDb.Domain.Models;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Ioasys.IMDb.Api.Controllers
 {
+    [Authorize]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/filmes")]
     public class FilmesController : MainController
@@ -44,6 +46,7 @@ namespace Ioasys.IMDb.Api.Controllers
             return CustomResponse(filme);
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost()]
         public async Task<ActionResult<FilmeViewModel>> Adicionar(FilmeViewModel filmeViewModel)
         {
@@ -54,6 +57,7 @@ namespace Ioasys.IMDb.Api.Controllers
             return CustomResponse(filmeViewModel);
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPut("{id:guid}")]
         public async Task<ActionResult<FilmeViewModel>> Atualizar(Guid id, FilmeViewModel filmeViewModel)
         {
@@ -66,6 +70,7 @@ namespace Ioasys.IMDb.Api.Controllers
             return CustomResponse(filmeViewModel);
         }
 
+        [Authorize(Roles = "admin")]
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult<FilmeViewModel>> Excluir(Guid id)
         {

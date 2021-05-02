@@ -13,7 +13,7 @@ namespace Ioasys.IMDb.Api.Configurations
             services.AddScoped<IMDbContext>();
             services.AddScoped<IAdministradorRepository, AdministradorRepository>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();                     
-            services.AddScoped<IFilmeRepository, FilmeRepository>();                     
+            services.AddScoped<IFilmeRepository, FilmeRepository>();
 
             services.AddTransient<TokenService>();
 
