@@ -1,8 +1,10 @@
-﻿namespace Ioasys.IMDb.Domain.Models
+﻿using System.Collections.Generic;
+
+namespace Ioasys.IMDb.Domain.Models
 {
     public class Usuario : Pessoa
     {
-        public Voto Voto { get; set; }
+        public List<Voto> Votos { get; set; }
         public Usuario()
         {
             Ativo = true;

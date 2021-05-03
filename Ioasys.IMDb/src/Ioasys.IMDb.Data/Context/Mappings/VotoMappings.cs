@@ -10,9 +10,9 @@ namespace Ioasys.IMDb.Data.Context.Mappings
         {
             builder.HasKey(v => v.Id);
 
-            // 1:1 => Voto : Usuario 
+            // 1:N => Voto : Usuario 
             builder.HasOne(v => v.Usuario)
-                .WithOne(u => u.Voto)
+                .WithMany(u => u.Votos)                
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.ToTable("Votos");

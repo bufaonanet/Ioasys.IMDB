@@ -38,6 +38,8 @@ namespace Ioasys.IMDb.Api.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<dynamic>> Login(LoginUserViewModel loginViewModel)
         {
+
+
             var administrador = await _repository
                 .ObterAdministradorLogin(loginViewModel.Login, loginViewModel.Senha);
 

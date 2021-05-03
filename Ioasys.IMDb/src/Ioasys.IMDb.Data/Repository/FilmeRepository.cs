@@ -22,7 +22,8 @@ namespace Ioasys.IMDb.Data.Repository
         public async Task<List<Filme>> ObterTodosFilmes()
         {
             return await _db.Filmes
-                .AsNoTracking()             
+                .AsNoTracking()  
+                .Include(f => f.Votos)
                 .OrderBy(f => f.Nome)
                 .ToListAsync();
         }

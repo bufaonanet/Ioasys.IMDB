@@ -27,35 +27,15 @@ namespace Ioasys.IMDb.Api
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString"));
             });
 
-
             services.AddIdentityConfiguration(Configuration);
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddControllers();
-
-            services.AddApiVersioning(options =>
-            {
-                options.AssumeDefaultVersionWhenUnspecified = true;
-                options.DefaultApiVersion = new ApiVersion(1, 0);
-                options.ReportApiVersions = true;
-            });
-
-            services.AddVersionedApiExplorer(options =>
-            {
-                options.GroupNameFormat = "'v'VVV";
-                options.SubstituteApiVersionInUrl = true;
-            });
-
+            services.AddApiConfig();
 
             services.ResolveDependecies();
 
             services.AddSaggerConfig();
-
-            //services.AddSwaggerGen(c =>
-            //{
-            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "IMDb API", Version = "v1" });
-            //});
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -63,23 +43,11 @@ namespace Ioasys.IMDb.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-
-                app.UseSwaggerConfig();
-                //app.UseSwagger();
-                //app.UseSwaggerUI(c => c.SwaggerEndpoint($"/swagger/v1/swagger.json", "IMDb V1"));
             }
 
-            app.UseHttpsRedirection();
+            app.UseApiConfig();
 
-            app.UseRouting();
-
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });           
+            app.UseSwaggerConfig();
         }
     }
 }

@@ -7,6 +7,7 @@ using AutoMapper;
 using Ioasys.IMDb.Api.ViewModels;
 using Ioasys.IMDb.Domain.Interfaces;
 using Ioasys.IMDb.Domain.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Ioasys.IMDb.Api.Controllers
 {
@@ -17,27 +18,30 @@ namespace Ioasys.IMDb.Api.Controllers
     {
         private readonly IFilmeRepository _repository;
         private readonly IUsuarioRepository _usuarioRepository;
+        private readonly IVotoRepository _votoRepository;
         private readonly IMapper _mapper;
 
         public FilmesController(
-            IFilmeRepository repository, 
-            IUsuarioRepository usuarioRepository, 
-            IMapper mapper)
+            IFilmeRepository repository,
+            IUsuarioRepository usuarioRepository,
+            IMapper mapper,
+            IVotoRepository votoRepository)
         {
             _repository = repository;
             _usuarioRepository = usuarioRepository;
             _mapper = mapper;
+            _votoRepository = votoRepository;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<FilmeViewModel>> ObterTodos()
+        public async Task<IEnumerable<FilmeVisao>> ObterTodos()
         {
             var usuarios = await ObterTodosFilmes();
             return usuarios;
         }
 
         [HttpGet("{id:guid}")]
-        public async Task<ActionResult<FilmeViewModel>> ObterPorId(Guid id)
+        public async Task<ActionResult<FilmeVisao>> ObterPorId(Guid id)
         {
             var filme = await ObterFilmePorId(id);
 
@@ -48,7 +52,10 @@ namespace Ioasys.IMDb.Api.Controllers
 
         [Authorize(Roles = "admin")]
         [HttpPost()]
-        public async Task<ActionResult<FilmeViewModel>> Adicionar(FilmeViewModel filmeViewModel)
+        [ProducesResponseType(typeof(FilmeCadastro), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<FilmeCadastro>> Adicionar(FilmeCadastro filmeViewModel)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
@@ -59,7 +66,11 @@ namespace Ioasys.IMDb.Api.Controllers
 
         [Authorize(Roles = "admin")]
         [HttpPut("{id:guid}")]
-        public async Task<ActionResult<FilmeViewModel>> Atualizar(Guid id, FilmeViewModel filmeViewModel)
+        [ProducesResponseType(typeof(FilmeCadastro), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<FilmeCadastro>> Atualizar(Guid id, FilmeCadastro filmeViewModel)
         {
             if (id != filmeViewModel.Id) return BadRequest();
 
@@ -72,7 +83,11 @@ namespace Ioasys.IMDb.Api.Controllers
 
         [Authorize(Roles = "admin")]
         [HttpDelete("{id:guid}")]
-        public async Task<ActionResult<FilmeViewModel>> Excluir(Guid id)
+        [ProducesResponseType(typeof(FilmeCadastro), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<FilmeCadastro>> Excluir(Guid id)
         {
             var filmeViewModel = await ObterFilmePorId(id);
 
@@ -83,14 +98,37 @@ namespace Ioasys.IMDb.Api.Controllers
             return CustomResponse(filmeViewModel);
         }
 
-        private async Task<IEnumerable<FilmeViewModel>> ObterTodosFilmes()
+        [Authorize(Roles = "user")]
+        [HttpPost("votar")]
+        [ProducesResponseType(typeof(VotoViewModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> Votar(VotoViewModel votoViewModel)
         {
-            return _mapper.Map<IEnumerable<FilmeViewModel>>(await _repository.ObterTodosFilmes());
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
+
+            var filme = await ObterFilmePorId(votoViewModel.FilmeId);
+
+            if (filme == null) return NotFound("Filme não cadastrado");
+
+            var usuario = await _usuarioRepository.BuscarPorId(votoViewModel.UsuarioId);
+
+            if (usuario == null) return NotFound("Usuário não cadastrado");
+
+            await _votoRepository.Adicionar(_mapper.Map<Voto>(votoViewModel));
+
+            return CustomResponse(votoViewModel);
         }
 
-        private async Task<FilmeViewModel> ObterFilmePorId(Guid id)
+        private async Task<IEnumerable<FilmeVisao>> ObterTodosFilmes()
         {
-            return _mapper.Map<FilmeViewModel>(await _repository.ObterFilmePor(id));
+            return _mapper.Map<IEnumerable<FilmeVisao>>(await _repository.ObterTodosFilmes());
+        }
+
+        private async Task<FilmeVisao> ObterFilmePorId(Guid id)
+        {
+            return _mapper.Map<FilmeVisao>(await _repository.ObterFilmePor(id));
         }
 
 
