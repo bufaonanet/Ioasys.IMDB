@@ -33,6 +33,7 @@ namespace Ioasys.IMDb.Api.Controllers
             _tokenService = tokenService;
         }
 
+        
         [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult<dynamic>> Login(LoginUserViewModel loginViewModel)
