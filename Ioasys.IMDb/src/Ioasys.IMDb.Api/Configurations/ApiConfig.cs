@@ -10,6 +10,12 @@ namespace Ioasys.IMDb.Api.Configurations
         {
             services.AddControllers();
 
+            //suprimindo a validação automática da ModelState
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
+
             services.AddApiVersioning(options =>
             {
                 options.AssumeDefaultVersionWhenUnspecified = true;

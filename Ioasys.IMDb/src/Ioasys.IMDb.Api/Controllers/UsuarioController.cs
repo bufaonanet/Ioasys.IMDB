@@ -23,7 +23,8 @@ namespace Ioasys.IMDb.Api.Controllers
         public UsuarioController(
             IUsuarioRepository repository,
             IMapper mapper, 
-            TokenService tokenService)
+            TokenService tokenService,
+            INotificador notificador) : base(notificador)
         {
             _repository = repository;
             _mapper = mapper;

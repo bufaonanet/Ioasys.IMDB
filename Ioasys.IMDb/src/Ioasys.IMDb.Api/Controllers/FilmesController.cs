@@ -25,7 +25,8 @@ namespace Ioasys.IMDb.Api.Controllers
             IFilmeRepository repository,
             IUsuarioRepository usuarioRepository,
             IMapper mapper,
-            IVotoRepository votoRepository)
+            IVotoRepository votoRepository,
+            INotificador notificador) : base(notificador)
         {
             _repository = repository;
             _usuarioRepository = usuarioRepository;
