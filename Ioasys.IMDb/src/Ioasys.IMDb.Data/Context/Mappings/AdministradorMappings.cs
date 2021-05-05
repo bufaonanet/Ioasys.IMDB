@@ -8,6 +8,8 @@ namespace Ioasys.IMDb.Data.Context.Mappings
     {
         public void Configure(EntityTypeBuilder<Administrador> builder)
         {
+            builder.ToTable("Administradores");
+
             builder.HasKey(a => a.Id);
 
             builder.Property(d => d.Nome)
@@ -22,7 +24,14 @@ namespace Ioasys.IMDb.Data.Context.Mappings
                 .IsRequired()
                 .HasColumnType("varchar(100)");
 
-            builder.ToTable("Administradores");
+            //alimentando com  dados iniciais
+            builder.HasData(new Administrador
+            {
+                Nome = "Administrador de teste",
+                Login = "admin",
+                Senha = "123456"
+            }
+            );
         }
     }
 }

@@ -8,6 +8,8 @@ namespace Ioasys.IMDb.Data.Context.Mappings
     {
         public void Configure(EntityTypeBuilder<Usuario> builder)
         {
+            builder.ToTable("Usuarios");
+
             builder.HasKey(a => a.Id);
 
             builder.Property(d => d.Nome)
@@ -22,7 +24,14 @@ namespace Ioasys.IMDb.Data.Context.Mappings
                 .IsRequired()
                 .HasColumnType("varchar(100)");
 
-            builder.ToTable("Usuarios");
-        }
+            //alimentando com  dados iniciais
+            builder.HasData(new Usuario
+            {
+                Nome = "Usuário de teste",
+                Login = "user",
+                Senha = "123456"
+            }
+            );
+        }        
     }
 }

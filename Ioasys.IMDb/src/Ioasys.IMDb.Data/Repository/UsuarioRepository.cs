@@ -12,7 +12,7 @@ namespace Ioasys.IMDb.Data.Repository
     {
         public UsuarioRepository(IMDbContext db) : base(db) { }
 
-        public async Task AlterarEstadoAtivo(Usuario usuario, bool ativo)
+        public async Task Alterarstatus(Usuario usuario, bool ativo)
         {
             usuario.Ativo = ativo;
 
@@ -36,11 +36,22 @@ namespace Ioasys.IMDb.Data.Repository
                 .ToListAsync();
         }
 
+        public async Task<List<Usuario>> ObterTodosUsuariosPorStatus(bool status)
+        {
+            return await _db.Usuarios
+                .AsNoTracking()
+                .Where(u => u.Ativo == status)
+                .OrderBy(u => u.Nome)
+                .ToListAsync();
+        }
+
         public async Task<Usuario> ObterUsuarioLogin(string login, string senha)
         {
             return await _db.Usuarios
                 .AsNoTracking()
                 .FirstOrDefaultAsync(a => a.Login == login && a.Senha == senha);
         }
+
+        
     }
 }

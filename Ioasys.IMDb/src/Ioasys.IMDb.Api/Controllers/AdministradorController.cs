@@ -39,14 +39,6 @@ namespace Ioasys.IMDb.Api.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("teste")]
-        public ActionResult Teste([FromQuery] string nome)
-        {
-            return Ok($"O na QueryString = {nome}");
-        }
-
-
-        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult<dynamic>> Login(LoginUserViewModel loginViewModel)
         {
@@ -67,41 +59,33 @@ namespace Ioasys.IMDb.Api.Controllers
             };
         }
 
-        [HttpPut("usuario/ativar-desativar/{id:guid}")]        
-        public async Task<ActionResult<UsuarioViewModel>> DesativarUsuario(Guid id, [FromQuery] bool ativar )
+        [HttpPut("usuario/ativar-desativar/{id:guid}")]
+        public async Task<ActionResult<UsuarioViewModel>> AtivarUsuario(Guid id, [FromQuery] bool ativar = true)
         {
             var usuario = await _usuarioRepository.ObterUsuarioPor(id);
 
             if (usuario == null) return NotFound();
 
-            await _usuarioRepository.AlterarEstadoAtivo(usuario, ativar);
+            await _usuarioRepository.Alterarstatus(usuario, ativar);
 
             return CustomResponse(_mapper.Map<UsuarioViewModel>(usuario));
-        }        
+        }
 
         [HttpGet("usuarios")]
-        public async Task<IEnumerable<UsuarioViewModel>> ObterTodosUsuarios()
+        public async Task<IEnumerable<UsuarioViewModel>> ObterTodosUsuarios([FromQuery] bool ativos = true)
         {
-            var usuarios = _mapper.Map<IEnumerable<UsuarioViewModel>>(await _usuarioRepository.ObterTodos());
+            var usuarios = _mapper.Map<IEnumerable<UsuarioViewModel>>(await _usuarioRepository.ObterTodosUsuariosPorStatus(ativos));
             return usuarios;
         }
 
-        [HttpGet("usuarios-ativos")]
-        public async Task<IEnumerable<UsuarioViewModel>> ObterTodosUsuariosAtivos()
-        {
-            var usuarios = _mapper.Map<IEnumerable<UsuarioViewModel>>(await _usuarioRepository.ObterTodosUsuariosAtivos());
-            return usuarios;
-        }
-
-
-        [HttpGet]        
+        [HttpGet]
         public async Task<IEnumerable<UsuarioViewModel>> ObterTodos()
         {
             var administradores = await ObterTodosAdministradores();
             return administradores;
         }
 
-        [HttpGet("{id:guid}")]       
+        [HttpGet("{id:guid}")]
         public async Task<ActionResult<UsuarioViewModel>> ObterPorId(Guid id)
         {
             var administradores = await ObterAdministradorPorId(id);

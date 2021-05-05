@@ -9,7 +9,8 @@ namespace Ioasys.IMDb.Domain.Interfaces
     {
         Task<Usuario> ObterUsuarioPor(Guid id);
         Task<List<Usuario>> ObterTodosUsuariosAtivos();
-        Task AlterarEstadoAtivo(Usuario usuario, bool ativo);
+        Task<List<Usuario>> ObterTodosUsuariosPorStatus(bool status);
+        Task Alterarstatus(Usuario usuario, bool ativo);
         Task<Usuario> ObterUsuarioLogin(string login, string senha);
     }
 }

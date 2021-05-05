@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20210505183450_script_inicial.cs" />
+    <Compile Remove="Migrations\20210505183450_script_inicial.Designer.cs" />
+    <Compile Remove="Migrations\20210505183751_script_inicial.cs" />
+    <Compile Remove="Migrations\20210505183751_script_inicial.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.14" />
@@ -12,6 +19,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Ioasys.IMDb.Domain\Ioasys.IMDb.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>
