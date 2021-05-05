@@ -34,12 +34,12 @@ namespace Ioasys.IMDb.Api.Controllers
             _votoRepository = votoRepository;
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<FilmeVisao>> ObterTodos()
+        [HttpGet()]
+        public async Task<PagedResult<Filme>> ObterTodosFilmes(
+           [FromQuery] int tamanhoPagina = 6, [FromQuery] int pagina = 1, [FromQuery] string filtroNomeFilme = null)
         {
-            var usuarios = await ObterTodosFilmes();
-            return usuarios;
-        }
+            return await _repository.ObterTodosFilmes(tamanhoPagina, pagina, filtroNomeFilme);
+        }       
 
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<FilmeVisao>> ObterPorId(Guid id)
@@ -122,17 +122,10 @@ namespace Ioasys.IMDb.Api.Controllers
             return CustomResponse(votoViewModel);
         }
 
-        private async Task<IEnumerable<FilmeVisao>> ObterTodosFilmes()
-        {
-            return _mapper.Map<IEnumerable<FilmeVisao>>(await _repository.ObterTodosFilmes());
-        }
-
         private async Task<FilmeVisao> ObterFilmePorId(Guid id)
         {
             return _mapper.Map<FilmeVisao>(await _repository.ObterFilmePor(id));
         }
-
-
 
     }
 }

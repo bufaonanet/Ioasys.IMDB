@@ -8,6 +8,7 @@ namespace Ioasys.IMDb.Domain.Interfaces
     public interface IFilmeRepository : IRepository<Filme>
     {
         Task<Filme> ObterFilmePor(Guid id);
-        Task<List<Filme>> ObterTodosFilmes();      
+        Task<List<Filme>> ObterTodosFilmes();
+        Task<PagedResult<Filme>> ObterTodosFilmes(int pageSize, int pageIndex, string query);
     }
 }
