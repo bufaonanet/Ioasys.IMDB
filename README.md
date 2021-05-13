@@ -18,8 +18,8 @@ Projeto de uma API que o site IMDb irá consultar para exibir seu conteúdo, e c
  - Apenas os usuários poderão votar nos filmes
  - Voto (a contagem de votos será feita por usuário de 0-4 que indica quanto o usuário gostou do filme)
  - Listagem
-   -- Opção de filtros por  nome.
-   -- Opção de trazer registros paginados
+   - Opção de filtros por  nome.
+   - Opção de trazer registros paginados
 
 # Tecnologias utilizadas
  - A API construída em .NET Core 3.1 WebAPI
